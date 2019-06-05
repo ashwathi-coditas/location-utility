@@ -132,7 +132,6 @@ public class LocationServiceImpl implements LocationService {
                     PlaceDTO placeDTO = new PlaceDTO();
                     JSONObject locationObj = (JSONObject) jsonArrayVenues.getJSONObject(j).get("location");
                     JSONArray categories = (JSONArray) jsonArrayVenues.getJSONObject(j).get("categories");
-                    log.trace("Data:{}", locationObj.toString());
                     placeDTO.setName(jsonArrayVenues.getJSONObject(j).getString("name"));
                     placeDTO.setCategory(((JSONObject) categories.get(0)).getString("name"));
 
