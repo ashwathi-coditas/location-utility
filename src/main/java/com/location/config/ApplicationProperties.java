@@ -11,9 +11,11 @@ import org.springframework.context.annotation.PropertySource;
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 @PropertySource("classpath:application.properties")
 public class ApplicationProperties {
-    String clientId;
-    String clientSecret;
-    String apiPath;
+    private String clientId;
+    private String clientSecret;
+    private String foursquareAPI;
+    private String googleAPI;
+    private String apiKey;
 
     public String getClientId() {
         return clientId;
@@ -31,11 +33,27 @@ public class ApplicationProperties {
         this.clientSecret = clientSecret;
     }
 
-    public String getApiPath() {
-        return apiPath;
+    public String getFoursquareAPI() {
+        return foursquareAPI;
     }
 
-    public void setApiPath(String apiPath) {
-        this.apiPath = apiPath;
+    public void setFoursquareAPI(String foursquareAPI) {
+        this.foursquareAPI = foursquareAPI;
+    }
+
+    public String getGoogleAPI() {
+        return googleAPI;
+    }
+
+    public void setGoogleAPI(String googleAPI) {
+        this.googleAPI = googleAPI;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 }
