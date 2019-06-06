@@ -23,7 +23,7 @@ Clone the repository on your local machine and run the following commands to sta
 
 #### Search for location by name
 Returns location details like city,state,country etc.
-GET : http://localhost:8080/api/location/getLocationByName/
+> GET : http://localhost:8080/api/location/getLocationByName/
 
 **Parameters:**
 - name: (Required) name of location passed in path
@@ -31,11 +31,11 @@ e.g. http://localhost:8080/api/location/getLocationByName/chicago
 
 #### Get categories list
 Returns a list of categories with id and name.
-GET : http://localhost:8080/api/location/getCategories
+> GET : http://localhost:8080/api/location/getCategories
 
 #### Get place details
 Returns a list of places for a given location with specified attributes like category,radius,searchQuery.
-POST: http://localhost:8080/api/location/getPlaces
+> POST: http://localhost:8080/api/location/getPlaces
 
 **Parameters:**
 - name: (Required) name of location
