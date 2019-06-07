@@ -1,6 +1,8 @@
 package com.location;
 
 import com.location.config.ApplicationProperties;
+import com.location.service.GeoProviderLookup;
+import com.location.service.LocationService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -23,4 +25,16 @@ public class LocationUtilityApp {
     public ApplicationProperties applicationProperties() {
         return new ApplicationProperties();
     }
+
+    @Bean
+    public GeoProviderLookup geoProviderLookup() {
+        return new GeoProviderLookup();
+    }
+
+    @Bean
+    public LocationService locationService() {
+        return new LocationService();
+    }
+
+
 }

@@ -5,7 +5,7 @@ import com.location.dto.CategoryDTO;
 import com.location.dto.LocationDTO;
 import com.location.dto.LocationFilterDTO;
 import com.location.dto.PlaceDTO;
-import com.location.service.LocationService;
+import com.location.service.GeoProviderService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,18 +17,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * LocationService implementation for getting locations  by name, list and filter them.
  */
 @Service
-public class LocationServiceImpl implements LocationService {
+public class GeoProviderServiceImpl implements GeoProviderService {
 
-    private final Logger log = LoggerFactory.getLogger(LocationServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(GeoProviderServiceImpl.class);
 
     @Autowired
     ApplicationProperties applicationProperties;
@@ -148,6 +153,13 @@ public class LocationServiceImpl implements LocationService {
                     log.error("Error:" + ex.getMessage());
                 }
             }
+        }
+        if (locationFilterDTO.getCategoryName() != null && !StringUtils.isEmpty(placeDTOS)) {
+            List<PlaceDTO> categoryFilteredPlaces = placeDTOS.stream().filter(placeDTO ->
+                    placeDTO.getCategory().contains(locationFilterDTO.getCategoryName())
+            ).collect(Collectors.toList());
+            log.debug("Returning list of places of size :{}", categoryFilteredPlaces.size());
+            return categoryFilteredPlaces;
         }
         log.debug("Returning list of places of size :{}", placeDTOS.size());
         return placeDTOS;
