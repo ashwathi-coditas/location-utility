@@ -6,6 +6,7 @@ public class LocationFilterDTO {
     Long radius;
     String searchQuery;
     Long limit;
+    String categoryName;
 
     public String getName() {
         return name;
@@ -47,6 +48,14 @@ public class LocationFilterDTO {
         this.searchQuery = searchQuery;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public String toString() {
         return "LocationFilterDTO{" +
@@ -55,6 +64,7 @@ public class LocationFilterDTO {
                 ", radius=" + radius +
                 ", searchQuery='" + searchQuery + '\'' +
                 ", limit=" + limit +
+                ", categoryName='" + categoryName + '\'' +
                 '}';
     }
 }

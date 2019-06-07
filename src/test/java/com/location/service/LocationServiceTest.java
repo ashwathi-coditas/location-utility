@@ -5,7 +5,7 @@ import com.location.dto.CategoryDTO;
 import com.location.dto.LocationDTO;
 import com.location.dto.LocationFilterDTO;
 import com.location.dto.PlaceDTO;
-import com.location.service.impl.LocationServiceImpl;
+import com.location.service.impl.FourSquareServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 /**
  * Test class for the LocationService.
  *
- * @see com.location.service.impl.LocationServiceImpl
+ * @see FourSquareServiceImpl
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
@@ -46,7 +46,7 @@ public class LocationServiceTest {
     private RestTemplate restTemplate;
 
     @InjectMocks
-    LocationServiceImpl locationService;
+    FourSquareServiceImpl locationService;
 
     private ResponseEntity<String> responseEntity;
 

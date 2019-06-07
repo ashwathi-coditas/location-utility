@@ -1,15 +1,14 @@
 package com.location.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.location.dto.CategoryDTO;
-import com.location.dto.LocationDTO;
-import com.location.dto.LocationFilterDTO;
-import com.location.dto.PlaceDTO;
+import com.location.dto.*;
+import com.location.service.GeoProviderService;
 import com.location.service.LocationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.http.MediaType;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,8 +42,9 @@ public class LocationControllerTest {
     private String GET_PLACES_URL = "/api/location/getPlaces";
     private MockMvc mockMvc;
     private ObjectMapper objectMapper = new ObjectMapper();
+
     @Spy
-    LocationService locationService;
+    GeoProviderService geoProviderService;
 
     @InjectMocks
     private LocationController locationController;
@@ -59,18 +60,19 @@ public class LocationControllerTest {
         String name = "chicago";
         LocationDTO locationDTO = new LocationDTO();
         locationDTO.setCity(name);
-        doReturn(locationDTO).when(locationService).getLocationByName(name);
+        doReturn(locationDTO).when(geoProviderService).getLocationByName(name);
         MvcResult result = mockMvc.perform(get(GET_LOCATION_BY_NAME_URL, name))
                 .andExpect(status().isOk()).andReturn();
-        LocationDTO responseDTO = objectMapper.readValue(result.getResponse().getContentAsString(), LocationDTO.class);
-        assertEquals(name, responseDTO.getCity());
+        ResponseDTO responseDTO = objectMapper.readValue(result.getResponse().getContentAsString(), ResponseDTO.class);
+        assertEquals(responseDTO.getSuccess(), true);
     }
 
     @Test
     public void testGetCategories_ShouldReturnStatusOk() throws Exception {
-        doReturn(new ArrayList<CategoryDTO>()).when(locationService).getCategories();
+        doReturn(new ArrayList<CategoryDTO>()).when(geoProviderService).getCategories();
         MvcResult result = mockMvc.perform(get(GET_CATEGORIES_URL))
                 .andExpect(status().isOk()).andReturn();
+
     }
 
     @Test
@@ -78,7 +80,7 @@ public class LocationControllerTest {
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
         locationFilterDTO.setLimit(2l);
         locationFilterDTO.setName("chicago");
-        doReturn(new ArrayList<PlaceDTO>()).when(locationService).getPlaces(locationFilterDTO);
+        doReturn(new ArrayList<PlaceDTO>()).when(geoProviderService).getPlaces(locationFilterDTO);
         MvcResult result = mockMvc.perform(post(GET_PLACES_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(locationFilterDTO)))
                 .andExpect(status().isOk()).andReturn();
