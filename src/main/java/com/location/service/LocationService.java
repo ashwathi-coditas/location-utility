@@ -23,7 +23,7 @@ public class LocationService {
     private final Logger log = LoggerFactory.getLogger(LocationService.class);
 
     public LocationService() {
-        this.geoProviderService = geoProviderLookup.getProviderService();
+        this.geoProviderService = this.geoProviderLookup.getProviderService();
     }
 
     /**

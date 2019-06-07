@@ -54,8 +54,7 @@ public class LocationControllerTest {
     @InjectMocks
     private LocationController locationController;
 
-    @Mock
-    ResponseEntity<ResponseDTO> responseEntity;
+    private ResponseEntity<ResponseDTO> responseEntity;
 
     @Before
     public void init() {

@@ -14,12 +14,12 @@ Install the following on your machine
 - Maven
 
 Clone the repository on your local machine and run the following commands to start the application:
-```
-**Build the application and run testcases**
-> mvn clean install
-**Run the application**
-> mvn spring-boot:run
-```
+
+> **Build the application and run testcases**
+``` mvn clean install```
+> **Run the application**
+``` mvn spring-boot:run```
+
 
 ## API endpoints
 
