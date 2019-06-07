@@ -15,8 +15,10 @@ Install the following on your machine
 
 Clone the repository on your local machine and run the following commands to start the application:
 ```
-1. mvn clean install
-2. mvn spring-boot:run
+**Build the application and run testcases**
+> mvn clean install
+**Run the application**
+> mvn spring-boot:run
 ```
 
 ## API endpoints
@@ -43,4 +45,5 @@ Returns a list of places for a given location with specified attributes like cat
 - radius: (Optional) Radius in meters for bring places in and around that radius of given location.
 - limit: (Optional) Limit the number of records to fetch.
 - searchQuery:(Optional) Search text will be applied on the list of places obtained.
+- categoryName: (Optional) Search for place by category name.
 
