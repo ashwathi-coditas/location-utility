@@ -93,7 +93,7 @@ public class GeoProviderServiceTest {
         locationFilterDTO.setSearchQuery("Travel");
         locationFilterDTO.setCategoryName("Travel");
         List<PlaceDTO> placeDTOS = geoServiceProvider.getPlaces(locationFilterDTO);
-        assertTrue("Return non empty list of places", placeDTOS.size() > 0);
+        assertTrue("Return non empty list of places", !CollectionUtils.isEmpty(placeDTOS));
     }
 
 }
