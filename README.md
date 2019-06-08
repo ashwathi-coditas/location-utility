@@ -15,11 +15,11 @@ Install the following on your machine
 
 Clone the repository on your local machine and run the following commands to start the application:
 
-> **Build the application without test-cases**
+##### Build the application without test-cases
 ``` mvn clean install -DskipTests```
-> **Run the application**
+##### Run the application
 ``` mvn spring-boot:run```
-> **Run tests**
+##### Run tests
 ``` mvn test```
 
 
@@ -45,3 +45,6 @@ Returns a list of places for a given location with specified attributes like cat
 - searchQuery:(Optional) Search text will be applied on the list of places obtained.
 - categoryName: (Optional) Search for place by category name.
 
+## LOCATION PROVIDER SERVICE
+Using FOURSQUARE place APIs for fetching location details.
+> Link for reference: https://developer.foursquare.com/places-api
