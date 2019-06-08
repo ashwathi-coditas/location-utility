@@ -1,30 +1,29 @@
 package com.location.service;
 
-import com.location.config.Constants;
-import com.location.dto.*;
+import com.location.config.MessageConstants;
+import com.location.dto.LocationDTO;
+import com.location.dto.LocationFilterDTO;
+import com.location.dto.PlaceDTO;
+import com.location.dto.ResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.HttpClientErrorException;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class LocationService {
 
-    @Autowired
-    GeoProviderLookup geoProviderLookup;
 
-    private final GeoProviderService geoProviderService;
+    @Resource(name = "fourSquare")
+    private GeoProviderService geoProviderService;
 
     private final Logger log = LoggerFactory.getLogger(LocationService.class);
-
-    public LocationService() {
-        this.geoProviderService = this.geoProviderLookup.getProviderService();
-    }
 
     /**
      * Get location details by location name
@@ -41,38 +40,16 @@ public class LocationService {
             responseDTO.setHttpStatus(HttpStatus.OK);
             responseDTO.setSuccess(true);
             if (locationDTO == null) {
-                responseDTO.setMessage(Constants.LOCATION_NOT_FOUND);
+                responseDTO.setMessage(MessageConstants.LOCATION_NOT_FOUND);
             } else {
-                responseDTO.setMessage(Constants.SUCCESS);
+                responseDTO.setMessage(MessageConstants.SUCCESS);
             }
-        } catch (Exception e) {
-            log.error("Error while searching for location" + e);
-            responseDTO.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException e) {
+            log.error("Error while searching for location", e);
             responseDTO.setSuccess(false);
-            responseDTO.setMessage(Constants.ERROR_FETCHING_LOCATION_DETAILS);
-        }
-        return new ResponseEntity<>(responseDTO, responseDTO.getHttpStatus());
-    }
-
-    /**
-     * Get list of categories
-     *
-     * @return Return ResponseEntity class with Response containing  list of category object in response
-     */
-    public ResponseEntity<ResponseDTO> getCategories() {
-        log.info("Request to get list of categories..");
-        ResponseDTO responseDTO = new ResponseDTO();
-        try {
-            List<CategoryDTO> categoryDTOList = geoProviderService.getCategories();
-            responseDTO.setData(categoryDTOList);
-            responseDTO.setHttpStatus(HttpStatus.OK);
-            responseDTO.setSuccess(true);
-            responseDTO.setMessage(Constants.SUCCESS);
-        } catch (Exception e) {
-            log.error("Error while getting categories" + e);
             responseDTO.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            responseDTO.setSuccess(false);
-            responseDTO.setMessage(Constants.ERROR_FETCHING_CATEGORIES);
+            responseDTO.setErrorCode(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+            responseDTO.setMessage(MessageConstants.ERROR_FETCHING_LOCATION_DETAILS);
         }
         return new ResponseEntity<>(responseDTO, responseDTO.getHttpStatus());
     }
@@ -91,16 +68,17 @@ public class LocationService {
             responseDTO.setData(placeDTOS);
             responseDTO.setHttpStatus(HttpStatus.OK);
             responseDTO.setSuccess(true);
-            if (StringUtils.isEmpty(placeDTOS)) {
-                responseDTO.setMessage(Constants.NO_LOCATIONS_FOUND);
+            if (CollectionUtils.isEmpty(placeDTOS)) {
+                responseDTO.setMessage(MessageConstants.NO_LOCATIONS_FOUND);
             } else {
-                responseDTO.setMessage(Constants.SUCCESS);
+                responseDTO.setMessage(MessageConstants.SUCCESS);
             }
-        } catch (Exception e) {
-            log.error("Error while searching for location details" + e);
-            responseDTO.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException e) {
+            log.error("Error while searching for location details", e);
             responseDTO.setSuccess(false);
-            responseDTO.setMessage(Constants.ERROR_FETCHING_LOCATION_DETAILS);
+            responseDTO.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            responseDTO.setErrorCode(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+            responseDTO.setMessage(MessageConstants.ERROR_FETCHING_LOCATION_DETAILS);
         }
         return new ResponseEntity<>(responseDTO, responseDTO.getHttpStatus());
     }

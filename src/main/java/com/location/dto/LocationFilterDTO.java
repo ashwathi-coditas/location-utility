@@ -2,7 +2,6 @@ package com.location.dto;
 
 public class LocationFilterDTO {
     String name;
-    String categoryId;
     Long radius;
     String searchQuery;
     Long limit;
@@ -14,14 +13,6 @@ public class LocationFilterDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
     }
 
     public Long getRadius() {
@@ -60,7 +51,6 @@ public class LocationFilterDTO {
     public String toString() {
         return "LocationFilterDTO{" +
                 "name='" + name + '\'' +
-                ", categoryId='" + categoryId + '\'' +
                 ", radius=" + radius +
                 ", searchQuery='" + searchQuery + '\'' +
                 ", limit=" + limit +
