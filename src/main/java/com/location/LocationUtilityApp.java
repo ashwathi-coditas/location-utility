@@ -1,8 +1,8 @@
 package com.location;
 
 import com.location.config.ApplicationProperties;
-import com.location.service.GeoProviderLookup;
-import com.location.service.LocationService;
+import com.location.service.GeoProviderService;
+import com.location.service.impl.GeoProviderServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,24 +17,24 @@ public class LocationUtilityApp {
     }
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
-    @Bean
     public ApplicationProperties applicationProperties() {
         return new ApplicationProperties();
     }
 
     @Bean
-    public GeoProviderLookup geoProviderLookup() {
-        return new GeoProviderLookup();
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
-    @Bean
-    public LocationService locationService() {
-        return new LocationService();
+    @Bean("fourSquare")
+    public GeoProviderService geoProviderService() {
+        return new GeoProviderServiceImpl();
     }
 
 
+    // Add another service provider
+    /*@Bean("google")
+    public GeoProviderService googleService() {
+        return new GoogleServiceImpl();
+    }*/
 }

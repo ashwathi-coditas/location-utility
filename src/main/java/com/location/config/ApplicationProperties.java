@@ -38,4 +38,13 @@ public class ApplicationProperties {
     public void setFoursquareAPI(String foursquareAPI) {
         this.foursquareAPI = foursquareAPI;
     }
+
+    @Override
+    public String toString() {
+        return "ApplicationProperties{" +
+                "clientId='" + clientId + '\'' +
+                ", clientSecret='" + clientSecret + '\'' +
+                ", foursquareAPI='" + foursquareAPI + '\'' +
+                '}';
+    }
 }

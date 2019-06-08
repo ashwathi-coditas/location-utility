@@ -1,6 +1,7 @@
 package com.location.controller;
 
-import com.location.dto.*;
+import com.location.dto.LocationFilterDTO;
+import com.location.dto.ResponseDTO;
 import com.location.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class LocationController {
 
     @Autowired
-    LocationService locationService;
+    private LocationService locationService;
 
     /**
      * Get location details by location name
@@ -26,17 +27,6 @@ public class LocationController {
     public ResponseEntity<ResponseDTO> getLocationByName(@PathVariable String name) {
         return locationService.getLocationByName(name);
     }
-
-    /**
-     * Get list of categories
-     *
-     * @return Return CategoryDTO  list object in ResponseDTO
-     */
-    @GetMapping("/getCategories")
-    public ResponseEntity<ResponseDTO> getCategories() {
-        return locationService.getCategories();
-    }
-
 
     /**
      * Get list of places for a location with respective filters applied
