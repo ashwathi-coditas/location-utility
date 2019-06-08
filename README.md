@@ -45,6 +45,6 @@ Returns a list of places for a given location with specified attributes like cat
 - searchQuery:(Optional) Search text will be applied on the list of places obtained.
 - categoryName: (Optional) Search for place by category name.
 
-## LOCATION PROVIDER SERVICE
+## Location Provider Service
 Using FOURSQUARE place APIs for fetching location details.
 > Link for reference: https://developer.foursquare.com/places-api
