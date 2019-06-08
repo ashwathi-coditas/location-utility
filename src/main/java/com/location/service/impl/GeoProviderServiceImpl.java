@@ -66,7 +66,7 @@ public class GeoProviderServiceImpl implements GeoProviderService {
                     locationDTO.setCountryCode(locationObj.getString("cc"));
                 }
             } catch (JSONException ex) {
-                log.error("Error:", ex);
+                log.error("Error:", ex.getMessage());
             }
         }
         log.debug("Return location data:{}", locationDTO);
@@ -107,7 +107,7 @@ public class GeoProviderServiceImpl implements GeoProviderService {
                     placeDTO.setCountryCode(locationObj.getString("cc"));
                     placeDTOS.add(placeDTO);
                 } catch (JSONException ex) {
-                    log.error("Error:", ex);
+                    log.error("Error:", ex.getMessage());
                 }
             }
         }
