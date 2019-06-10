@@ -48,3 +48,16 @@ Returns a list of places for a given location with specified attributes like cat
 ## Location Provider Service
 Using FOURSQUARE place APIs for fetching location details.
 > Link for reference: https://developer.foursquare.com/places-api
+
+## Implementation
+
+Bean qualifier is used for different implementations of Service Providers.
+Currently only FourSquare geo provider is implemented and used.
+
+> Error codes thrown by FourSquare which are handled in the Application:
+
+- Bad Request (400): Caused when location searched for is incorrect.
+- Unauthorized (401): Provided Auth token of FourSquare is invalid.
+- Internal Server error (500 & 409): Request was not processed by FourSquare.
+
+
