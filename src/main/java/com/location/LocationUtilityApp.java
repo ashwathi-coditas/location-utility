@@ -2,7 +2,8 @@ package com.location;
 
 import com.location.config.ApplicationProperties;
 import com.location.service.GeoProviderService;
-import com.location.service.impl.GeoProviderServiceImpl;
+import com.location.service.impl.FourSquareProviderServiceImpl;
+import com.location.service.impl.GoogleProviderServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,15 +27,24 @@ public class LocationUtilityApp {
         return new RestTemplate();
     }
 
+    /**
+     * Returns FourSquare implementation class for GeoProviderService
+     *
+     * @return GeoProviderService
+     */
     @Bean("fourSquare")
-    public GeoProviderService geoProviderService() {
-        return new GeoProviderServiceImpl();
+    public GeoProviderService fourSquareProviderService() {
+        return new FourSquareProviderServiceImpl();
     }
 
 
-    // Add another service provider
-    /*@Bean("google")
-    public GeoProviderService googleService() {
-        return new GoogleServiceImpl();
-    }*/
+    /**
+     * Returns Google implementation class for GeoProviderService
+     *
+     * @return GeoProviderService
+     */
+    @Bean("google")
+    public GeoProviderService googleProviderService() {
+        return new GoogleProviderServiceImpl();
+    }
 }

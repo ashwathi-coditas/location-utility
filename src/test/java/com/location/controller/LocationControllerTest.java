@@ -4,24 +4,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.location.dto.LocationFilterDTO;
 import com.location.dto.ResponseDTO;
 import com.location.service.LocationService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @see com.location.controller.LocationController
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public class LocationControllerTest {
 
@@ -48,13 +49,14 @@ public class LocationControllerTest {
     private LocationController locationController;
 
 
-    @Before
+    @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
     }
 
     @Test
+    @DisplayName("Test: Get API for Location")
     public void testLocationGetByNameShouldReturnStatusOk() throws Exception {
         String name = "chicago";
         ResponseDTO responseDTO = new ResponseDTO();
@@ -69,6 +71,7 @@ public class LocationControllerTest {
 
 
     @Test
+    @DisplayName("Test: Post API for getting places for location")
     public void testGetPlacesShouldReturnStatusOk() throws Exception {
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
         locationFilterDTO.setLimit(2l);
