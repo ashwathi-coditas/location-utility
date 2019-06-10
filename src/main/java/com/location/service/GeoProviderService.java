@@ -1,14 +1,11 @@
 package com.location.service;
 
-import com.location.dto.LocationDTO;
 import com.location.dto.LocationFilterDTO;
-import com.location.dto.PlaceDTO;
-
-import java.util.List;
+import com.location.dto.ResponseDTO;
 
 public interface GeoProviderService {
 
-    LocationDTO getLocationByName(String name);
+    ResponseDTO getLocationByName(String name);
 
-    List<PlaceDTO> getPlaces(LocationFilterDTO locationFilterDTO);
+    ResponseDTO getPlaces(LocationFilterDTO locationFilterDTO);
 }

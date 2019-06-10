@@ -6,7 +6,6 @@ public class ResponseDTO {
     private Boolean success = true;
     private String message;
     private Object data;
-    private String errorCode;
     private HttpStatus httpStatus;
 
     public Boolean getSuccess() {
@@ -31,14 +30,6 @@ public class ResponseDTO {
 
     public void setData(Object data) {
         this.data = data;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
     }
 
     public HttpStatus getHttpStatus() {
