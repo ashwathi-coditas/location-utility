@@ -23,7 +23,7 @@ public class LocationService {
     @Resource(name = "fourSquare")
     private GeoProviderService geoProviderService;
 
-    private final Logger log = LoggerFactory.getLogger(LocationService.class);
+    private static final Logger log = LoggerFactory.getLogger(LocationService.class);
 
     /**
      * Get location details by location name

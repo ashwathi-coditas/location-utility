@@ -27,12 +27,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * LocationService implementation for getting locations  by name, list and filter them.
+ * FourSquare Provider Service implementation for getting locations  by name, list and filter them.
  */
 @Service
-public class GeoProviderServiceImpl implements GeoProviderService {
+public class FourSquareProviderServiceImpl implements GeoProviderService {
 
-    private final Logger log = LoggerFactory.getLogger(GeoProviderServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(FourSquareProviderServiceImpl.class);
 
     @Autowired
     private ApplicationProperties applicationProperties;
