@@ -8,7 +8,7 @@ public interface GeoProviderService {
     /**
      * Get places for location name and category
      * @param locationFilterDTO
-     * @return
+     * @return ResponseDTO
      */
     ResponseDTO getPlaces(LocationFilterDTO locationFilterDTO);
 }
