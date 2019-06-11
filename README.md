@@ -46,18 +46,28 @@ Returns a list of places for a given location with specified attributes like cat
 - categoryName: (Optional) Search for place by category name.
 
 ## Location Provider Service
-Using FOURSQUARE place APIs for fetching location details.
-> Link for reference: https://developer.foursquare.com/places-api
+Using FOURSQUARE place and Google geocode APIs for fetching location details.
+> Link for Foursquare API reference: https://developer.foursquare.com/places-api
+> Link for Google geocode API reference: https://developers.google.com/maps/documentation/geocoding/intro
+
 
 ## Implementation
 
 Bean qualifier is used for different implementations of Service Providers.
-Currently only FourSquare geo provider is implemented and used.
+And Provider API is provided in application property file (application.yml) along with their auth credentials.
+The service will return a merged response from both the APIs or return either of them based on data returned from the response.
 
 > Error codes thrown by FourSquare which are handled in the Application:
 
 - Bad Request (400): Caused when location searched for is incorrect.
 - Unauthorized (401): Provided Auth token of FourSquare is invalid.
 - Internal Server error (500 & 409): Request was not processed by FourSquare.
+
+> Error Status codes thrown by Google which are handled in the Application:
+
+- ZERO_RESULTS: Caused when location searched for is incorrect.
+- OVER_DAILY_LIMIT: Provided Auth token of Google is invalid or account billing is not setup.
+- INVALID_REQUEST: Address is missing
+- UNKNOWN_ERROR: Request could not be processed by Google.
 
 
