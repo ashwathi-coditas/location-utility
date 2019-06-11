@@ -92,7 +92,7 @@ public class FourSquareProviderServiceImpl implements GeoProviderService {
                     break;
                 case 401:
                     responseDTO.setMessage(MessageConstants.INVALID_AUTH);
-                    responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST);
+                    responseDTO.setHttpStatus(HttpStatus.UNAUTHORIZED);
                     responseDTO.setSuccess(false);
                     break;
                 case 500:
