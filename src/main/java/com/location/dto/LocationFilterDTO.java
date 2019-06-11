@@ -1,8 +1,8 @@
 package com.location.dto;
 
 public class LocationFilterDTO {
-    String name;
-    String categoryName;
+    private String name;
+    private String categoryName;
 
     public String getName() {
         return name;

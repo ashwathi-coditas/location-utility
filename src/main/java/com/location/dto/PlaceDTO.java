@@ -3,14 +3,14 @@ package com.location.dto;
 import java.util.Objects;
 
 public class PlaceDTO {
-    String name;
-    String category;
-    String city;
-    String state;
-    String country;
-    String countryCode;
-    String postalCode;
-    String address;
+    private String name;
+    private String category;
+    private String city;
+    private String state;
+    private String country;
+    private String countryCode;
+    private String postalCode;
+    private String address;
 
     public String getName() {
         return name;
