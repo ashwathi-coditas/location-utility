@@ -4,6 +4,7 @@ import com.location.dto.LocationFilterDTO;
 import com.location.dto.ResponseDTO;
 import com.location.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,13 @@ public class LocationController {
      */
     @PostMapping("/getPlaces")
     public ResponseEntity<ResponseDTO> getPlaces(@RequestBody LocationFilterDTO locationFilterDTO) {
+        if (locationFilterDTO.getName() == null) {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setSuccess(false);
+            responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST);
+            responseDTO.setMessage("Location name is required for search.");
+            return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+        }
         return locationService.getPlaces(locationFilterDTO);
     }
 

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * Json object class for Google API response
+ */
 public class LocationDTO {
 
     @JsonProperty("long_name")
