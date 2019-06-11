@@ -1,6 +1,7 @@
 package com.location.service;
 
 import com.location.config.ApplicationProperties;
+import com.location.config.MessageConstants;
 import com.location.dto.LocationFilterDTO;
 import com.location.dto.PlaceDTO;
 import com.location.dto.ResponseDTO;
@@ -23,11 +24,13 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 /**
@@ -96,6 +99,54 @@ public class GeoProviderServiceTest {
         ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
         List<PlaceDTO> placeDTOS = (List<PlaceDTO>) responseDTO.getData();
         assertTrue("Return empty list of places", CollectionUtils.isEmpty(placeDTOS));
+    }
+
+    @Test
+    @DisplayName("Foursquare Test Error 400: Get Places for Location")
+    public void testFourSquareGetPlacesBadRequest() {
+        when(restTemplate.exchange(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(HttpMethod.class),
+                ArgumentMatchers.any(),
+                ArgumentMatchers.<Class<String>>any()
+        )).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Bad Request"));
+        LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
+        locationFilterDTO.setName("chicago");
+        locationFilterDTO.setCategoryName("Travel");
+        ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
+        assertEquals("Return Error", responseDTO.getMessage(), MessageConstants.LOCATION_NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Foursquare Test Error 401: Get Places for Location")
+    public void testFourSquareGetPlacesInvalidAuth() {
+        when(restTemplate.exchange(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(HttpMethod.class),
+                ArgumentMatchers.any(),
+                ArgumentMatchers.<Class<String>>any()
+        )).thenThrow(new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
+        LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
+        locationFilterDTO.setName("chicago");
+        locationFilterDTO.setCategoryName("Travel");
+        ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
+        assertEquals("Return Error", responseDTO.getMessage(), MessageConstants.INVALID_AUTH);
+    }
+
+    @Test
+    @DisplayName("Foursquare Test Error 500: Get Places for Location")
+    public void testFourSquareGetPlacesServerError() {
+        when(restTemplate.exchange(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(HttpMethod.class),
+                ArgumentMatchers.any(),
+                ArgumentMatchers.<Class<String>>any()
+        )).thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server error"));
+        LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
+        locationFilterDTO.setName("chicago");
+        locationFilterDTO.setCategoryName("Travel");
+        ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
+        assertEquals("Return Error", responseDTO.getMessage(), MessageConstants.ERROR_FETCHING_LOCATION_DETAILS);
     }
 
 
