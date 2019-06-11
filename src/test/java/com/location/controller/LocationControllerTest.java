@@ -15,8 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,8 +57,29 @@ public class LocationControllerTest {
         locationFilterDTO.setName("chicago");
         locationFilterDTO.setCategoryName("Travel");
         String jsonStr = objectMapper.writeValueAsString(locationFilterDTO);
-        mockMvc.perform(post(GET_PLACES_URL).contentType(MediaType.APPLICATION_JSON)
+        MvcResult result = mockMvc.perform(post(GET_PLACES_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(jsonStr))
                 .andExpect(status().isOk()).andReturn();
+        assertEquals(200, result.getResponse().getStatus(), "Match status OK");
+    }
+
+
+    @Test
+    @DisplayName("Test Bad Request: Post API for getting places for location without body params")
+    public void testGetPlacesShouldReturnStatusBadRequest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(post(GET_PLACES_URL))
+                .andExpect(status().isBadRequest()).andReturn();
+        assertEquals(400, mvcResult.getResponse().getStatus(), "Match status Bad Request");
+    }
+
+    @Test
+    @DisplayName("Test API request: Without location name in body params")
+    public void testGetPlacesShouldWithoutLocationReturnBadRequest() throws Exception {
+        LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
+        locationFilterDTO.setCategoryName("Travel");
+        String jsonStr = objectMapper.writeValueAsString(locationFilterDTO);
+        MvcResult result = mockMvc.perform(post(GET_PLACES_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(jsonStr)).andReturn();
+        assertEquals(400, result.getResponse().getStatus(), "Match Response Status");
     }
 }

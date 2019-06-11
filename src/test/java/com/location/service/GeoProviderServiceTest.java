@@ -42,6 +42,8 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, initializers = {ConfigFileApplicationContextInitializer.class})
 @TestPropertySource(properties = {"spring.config.location=classpath:application.yml"})
 public class GeoProviderServiceTest {
+    private String city = "chicago";
+    private String type = "Travel";
 
     @Mock
     ApplicationProperties applicationProperties;
@@ -75,8 +77,8 @@ public class GeoProviderServiceTest {
                 ArgumentMatchers.<Class<String>>any()
         )).thenReturn(responseEntity);
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
-        locationFilterDTO.setName("chicago");
-        locationFilterDTO.setCategoryName("Travel");
+        locationFilterDTO.setName(city);
+        locationFilterDTO.setCategoryName(type);
         ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
         List<PlaceDTO> placeDTOS = (List<PlaceDTO>) responseDTO.getData();
         assertTrue("Return non empty list of places", !CollectionUtils.isEmpty(placeDTOS));
@@ -94,8 +96,8 @@ public class GeoProviderServiceTest {
                 ArgumentMatchers.<Class<String>>any()
         )).thenReturn(responseEntity);
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
-        locationFilterDTO.setName("chicago");
-        locationFilterDTO.setCategoryName("Travel");
+        locationFilterDTO.setName(city);
+        locationFilterDTO.setCategoryName(type);
         ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
         List<PlaceDTO> placeDTOS = (List<PlaceDTO>) responseDTO.getData();
         assertTrue("Return empty list of places", CollectionUtils.isEmpty(placeDTOS));
@@ -111,8 +113,8 @@ public class GeoProviderServiceTest {
                 ArgumentMatchers.<Class<String>>any()
         )).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Bad Request"));
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
-        locationFilterDTO.setName("chicago");
-        locationFilterDTO.setCategoryName("Travel");
+        locationFilterDTO.setName(city);
+        locationFilterDTO.setCategoryName(type);
         ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
         assertEquals("Return Error", responseDTO.getMessage(), MessageConstants.LOCATION_NOT_FOUND);
     }
@@ -127,8 +129,8 @@ public class GeoProviderServiceTest {
                 ArgumentMatchers.<Class<String>>any()
         )).thenThrow(new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
-        locationFilterDTO.setName("chicago");
-        locationFilterDTO.setCategoryName("Travel");
+        locationFilterDTO.setName(city);
+        locationFilterDTO.setCategoryName(type);
         ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
         assertEquals("Return Error", responseDTO.getMessage(), MessageConstants.INVALID_AUTH);
     }
@@ -143,8 +145,8 @@ public class GeoProviderServiceTest {
                 ArgumentMatchers.<Class<String>>any()
         )).thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server error"));
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
-        locationFilterDTO.setName("chicago");
-        locationFilterDTO.setCategoryName("Travel");
+        locationFilterDTO.setName(city);
+        locationFilterDTO.setCategoryName(type);
         ResponseDTO responseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
         assertEquals("Return Error", responseDTO.getMessage(), MessageConstants.ERROR_FETCHING_LOCATION_DETAILS);
     }
@@ -162,7 +164,7 @@ public class GeoProviderServiceTest {
                 ArgumentMatchers.<Class<String>>any()
         )).thenReturn(responseEntity);
         LocationFilterDTO locationFilterDTO = new LocationFilterDTO();
-        locationFilterDTO.setName("chicago");
+        locationFilterDTO.setName(city);
         locationFilterDTO.setCategoryName("Building");
         ResponseDTO responseDTO = googleProviderService.getPlaces(locationFilterDTO);
         List<PlaceDTO> placeDTOS = (List<PlaceDTO>) responseDTO.getData();

@@ -26,7 +26,6 @@ import java.util.List;
 
 /**
  * Google Provider Service implementation for getting locations  by name, list and filter them.
- *
  */
 @Service
 public class GoogleProviderServiceImpl implements GeoProviderService {
@@ -87,9 +86,9 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
         String response = "";
         PlaceDTO placeDTO = new PlaceDTO();
         placeDTO.setName(name);
+        ObjectMapper mapper = new ObjectMapper();
         JSONArray jsonArrayVenues = (JSONArray) locationObj.get("address_components");
         for (int j = 0; j < jsonArrayVenues.length(); j++) {
-            ObjectMapper mapper = new ObjectMapper();
             try {
                 LocationDTO locationDTO = mapper.readValue(jsonArrayVenues.get(j).toString(), LocationDTO.class);
                 if (locationDTO.getTypes().contains("street_number") || locationDTO.getTypes().contains("route") || locationDTO.getTypes().contains("locality")) {
@@ -178,7 +177,7 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
         String url = applicationProperties.getApiPath().get("google") + "?" + getAuthorizationParam();
         String address = locationFilterDTO.getName();
         if (null != locationFilterDTO.getCategoryName()) {
-            address += "+" + locationFilterDTO.getCategoryName();
+            address = address.concat("+" + locationFilterDTO.getCategoryName());
         }
         url = url.concat("&address=" + address);
         return url;
