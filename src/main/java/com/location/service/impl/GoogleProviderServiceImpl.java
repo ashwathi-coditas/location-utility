@@ -26,8 +26,7 @@ import java.util.List;
 
 /**
  * Google Provider Service implementation for getting locations  by name, list and filter them.
- * <p>
- * Empty implementation for understanding purpose only.
+ *
  */
 @Service
 public class GoogleProviderServiceImpl implements GeoProviderService {
