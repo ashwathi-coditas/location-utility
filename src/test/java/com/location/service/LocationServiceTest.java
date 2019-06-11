@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 
