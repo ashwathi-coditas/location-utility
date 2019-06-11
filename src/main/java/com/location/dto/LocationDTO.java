@@ -1,60 +1,44 @@
 package com.location.dto;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class LocationDTO {
-    String city;
-    String state;
-    String country;
-    String countryCode;
-    String postalCode;
+    String long_name;
+    String short_name;
+    List<String> types;
 
-    public String getCity() {
-        return city;
+    public String getLong_name() {
+        return long_name;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLong_name(String long_name) {
+        this.long_name = long_name;
     }
 
-    public String getState() {
-        return state;
+    public String getShort_name() {
+        return short_name;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setShort_name(String short_name) {
+        this.short_name = short_name;
     }
 
-    public String getCountry() {
-        return country;
+    public List<String> getTypes() {
+        return types;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
 
     @Override
     public String toString() {
         return "LocationDTO{" +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", postalCode='" + postalCode + '\'' +
+                "long_name='" + long_name + '\'' +
+                ", short_name='" + short_name + '\'' +
+                ", types=" + types +
                 '}';
     }
 }
+

@@ -3,17 +3,20 @@ package com.location.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Properties specific to Location API
  * <p>
- * Properties are configured in the application.properties file.
+ * Properties are configured in the application.yml file.
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
-@PropertySource("classpath:application.properties")
 public class ApplicationProperties {
     private String clientId;
     private String clientSecret;
-    private String foursquareAPI;
+    private String googleKey;
+    private Map<String, String> apiPath = new HashMap<>();
 
     public String getClientId() {
         return clientId;
@@ -31,12 +34,20 @@ public class ApplicationProperties {
         this.clientSecret = clientSecret;
     }
 
-    public String getFoursquareAPI() {
-        return foursquareAPI;
+    public String getGoogleKey() {
+        return googleKey;
     }
 
-    public void setFoursquareAPI(String foursquareAPI) {
-        this.foursquareAPI = foursquareAPI;
+    public void setGoogleKey(String googleKey) {
+        this.googleKey = googleKey;
+    }
+
+    public Map<String, String> getApiPath() {
+        return apiPath;
+    }
+
+    public void setApiPath(Map<String, String> apiPath) {
+        this.apiPath = apiPath;
     }
 
     @Override
@@ -44,7 +55,8 @@ public class ApplicationProperties {
         return "ApplicationProperties{" +
                 "clientId='" + clientId + '\'' +
                 ", clientSecret='" + clientSecret + '\'' +
-                ", foursquareAPI='" + foursquareAPI + '\'' +
+                ", googleKey='" + googleKey + '\'' +
+                ", apiPath=" + apiPath +
                 '}';
     }
 }

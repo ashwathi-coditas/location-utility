@@ -1,5 +1,7 @@
 package com.location.dto;
 
+import java.util.Objects;
+
 public class PlaceDTO {
     String name;
     String category;
@@ -86,5 +88,24 @@ public class PlaceDTO {
                 ", postalCode='" + postalCode + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlaceDTO placeDTO = (PlaceDTO) o;
+        return category.contains(placeDTO.category) &&
+                city.equalsIgnoreCase(placeDTO.city) &&
+                state.equalsIgnoreCase(placeDTO.state) &&
+                country.equalsIgnoreCase(placeDTO.country) &&
+                countryCode.equalsIgnoreCase(placeDTO.countryCode) &&
+                postalCode.equalsIgnoreCase(placeDTO.postalCode) &&
+                address.equalsIgnoreCase(placeDTO.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, state, country, countryCode, postalCode, address);
     }
 }
