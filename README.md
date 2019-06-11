@@ -25,31 +25,18 @@ Clone the repository on your local machine and run the following commands to sta
 
 ## API endpoints
 
-#### Search for location by name
-Returns location details like city,state,country etc.
-> GET : http://localhost:8081/api/location/getLocationByName/
-
-**Parameters:**
-- name: (Required) name of location passed in path
-e.g. http://localhost:8081/api/location/getLocationByName/chicago
-
-#### Get place details
-Returns a list of places for a given location with specified attributes like category,radius,searchQuery.
+#### Get place details for location
+Returns a list of places for a given location with attribute like category(e.g.Building,Aquarium,Art Gallery etc).
 > POST: http://localhost:8081/api/location/getPlaces
 
 **Parameters:**
 - name: (Required) name of location
-- categoryId: (Optional) Category  id for a category obtained from category API.
-- radius: (Optional) Radius in meters for bring places in and around that radius of given location.
-- limit: (Optional) Limit the number of records to fetch.
-- searchQuery:(Optional) Search text will be applied on the list of places obtained.
 - categoryName: (Optional) Search for place by category name.
 
 ## Location Provider Service
 Using FOURSQUARE place and Google geocode APIs for fetching location details.
 1. Link for Foursquare API reference: https://developer.foursquare.com/places-api
 2. Link for Google geocode API reference: https://developers.google.com/maps/documentation/geocoding/intro
-
 
 ## Implementation
 

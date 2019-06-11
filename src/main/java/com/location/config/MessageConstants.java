@@ -1,6 +1,7 @@
 package com.location.config;
 
 public class MessageConstants {
+    private MessageConstants() {}
     public static final String SUCCESS = "Success";
     public static final String INVALID_AUTH = "Please check your account status and provide correct credentials to access geo provider.";
     public static final String LOCATION_NOT_FOUND = "Location not found.Please enter correct location name.";

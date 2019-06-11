@@ -1,26 +1,34 @@
 package com.location.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class LocationDTO {
-    private String long_name;
-    private String short_name;
+
+    @JsonProperty("long_name")
+    private String longName;
+
+    @JsonProperty("short_name")
+    private String shortName;
+
+    @JsonProperty("types")
     private List<String> types;
 
-    public String getLong_name() {
-        return long_name;
+    public String getLongName() {
+        return longName;
     }
 
-    public void setLong_name(String long_name) {
-        this.long_name = long_name;
+    public void setLongName(String longName) {
+        this.longName = longName;
     }
 
-    public String getShort_name() {
-        return short_name;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setShort_name(String short_name) {
-        this.short_name = short_name;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public List<String> getTypes() {
@@ -34,8 +42,8 @@ public class LocationDTO {
     @Override
     public String toString() {
         return "LocationDTO{" +
-                "long_name='" + long_name + '\'' +
-                ", short_name='" + short_name + '\'' +
+                "longName='" + longName + '\'' +
+                ", shortName='" + shortName + '\'' +
                 ", types=" + types +
                 '}';
     }

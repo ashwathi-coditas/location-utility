@@ -93,21 +93,21 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
             try {
                 LocationDTO locationDTO = mapper.readValue(jsonArrayVenues.get(j).toString(), LocationDTO.class);
                 if (locationDTO.getTypes().contains("street_number") || locationDTO.getTypes().contains("route") || locationDTO.getTypes().contains("locality")) {
-                    placeDTO.setAddress(placeDTO.getAddress() != null ? placeDTO.getAddress().concat(",").concat(locationDTO.getLong_name()) : locationDTO.getLong_name());
+                    placeDTO.setAddress(placeDTO.getAddress() != null ? placeDTO.getAddress().concat(",").concat(locationDTO.getLongName()) : locationDTO.getLongName());
 
                 }
                 if (locationDTO.getTypes().contains("administrative_area_level_2")) {
-                    placeDTO.setCity(locationDTO.getLong_name());
+                    placeDTO.setCity(locationDTO.getLongName());
                 }
                 if (locationDTO.getTypes().contains("administrative_area_level_1")) {
-                    placeDTO.setState(locationDTO.getLong_name());
+                    placeDTO.setState(locationDTO.getLongName());
                 }
                 if (locationDTO.getTypes().contains("country")) {
-                    placeDTO.setCountry(locationDTO.getLong_name());
-                    placeDTO.setCountryCode(locationDTO.getShort_name());
+                    placeDTO.setCountry(locationDTO.getLongName());
+                    placeDTO.setCountryCode(locationDTO.getShortName());
                 }
                 if (locationDTO.getTypes().contains("postal_code")) {
-                    placeDTO.setPostalCode(locationDTO.getLong_name());
+                    placeDTO.setPostalCode(locationDTO.getLongName());
                 }
             } catch (IOException e) {
                 response = MessageConstants.PROPERTY_NOT_FOUND;
