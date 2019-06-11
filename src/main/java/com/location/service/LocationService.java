@@ -2,60 +2,30 @@ package com.location.service;
 
 import com.location.config.MessageConstants;
 import com.location.dto.LocationFilterDTO;
+import com.location.dto.PlaceDTO;
 import com.location.dto.ResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class LocationService {
 
 
+    @Resource(name = "google")
+    private GeoProviderService googleProviderService;
+
     @Resource(name = "fourSquare")
-    private GeoProviderService geoProviderService;
+    private GeoProviderService fourSquareProviderService;
 
     private static final Logger log = LoggerFactory.getLogger(LocationService.class);
-
-    /**
-     * Get location details by location name
-     *
-     * @param name Name of Location to search by
-     * @return Return Return ResponseEntity class with Response containing Location details
-     */
-    public ResponseEntity<ResponseDTO> getLocationByName(String name) {
-        log.info("Get location by name:{}", name);
-        ResponseDTO responseDTO = new ResponseDTO();
-        try {
-            responseDTO = geoProviderService.getLocationByName(name);
-        } catch (HttpClientErrorException e) {
-            log.error("Error while searching for location", e);
-            switch (e.getRawStatusCode()) {
-                case 400:
-                    responseDTO.setMessage(MessageConstants.LOCATION_NOT_FOUND);
-                    responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST);
-                    responseDTO.setSuccess(false);
-                    break;
-                case 401:
-                    responseDTO.setMessage(MessageConstants.INVALID_AUTH);
-                    responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST);
-                    responseDTO.setSuccess(false);
-                    break;
-                case 500:
-                case 409:
-                default:
-                    responseDTO.setMessage(MessageConstants.ERROR_FETCHING_LOCATION_DETAILS);
-                    responseDTO.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-                    responseDTO.setSuccess(false);
-                    break;
-            }
-        }
-        return new ResponseEntity<>(responseDTO, responseDTO.getHttpStatus());
-    }
 
     /**
      * Get list of places for a location with respective filters applied
@@ -66,31 +36,27 @@ public class LocationService {
     public ResponseEntity<ResponseDTO> getPlaces(LocationFilterDTO locationFilterDTO) {
         log.info("Request to get places for a location:{} with filters: {}", locationFilterDTO.getName(), locationFilterDTO);
         ResponseDTO responseDTO = new ResponseDTO();
-        try {
-            responseDTO = geoProviderService.getPlaces(locationFilterDTO);
-        } catch (HttpClientErrorException e) {
-            log.error("Error while searching for location details", e);
-            switch (e.getRawStatusCode()) {
-                case 400:
-                    responseDTO.setMessage(MessageConstants.LOCATION_NOT_FOUND);
-                    responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST);
-                    responseDTO.setSuccess(false);
-                    break;
-                case 401:
-                    responseDTO.setMessage(MessageConstants.INVALID_AUTH);
-                    responseDTO.setHttpStatus(HttpStatus.BAD_REQUEST);
-                    responseDTO.setSuccess(false);
-                    break;
-                case 500:
-                case 409:
-                default:
-                    responseDTO.setMessage(MessageConstants.ERROR_FETCHING_LOCATION_DETAILS);
-                    responseDTO.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-                    responseDTO.setSuccess(false);
-                    break;
-            }
+        ResponseDTO googleResponseDTO = googleProviderService.getPlaces(locationFilterDTO);
+        ResponseDTO fourSquareResponseDTO = fourSquareProviderService.getPlaces(locationFilterDTO);
+        if (googleResponseDTO.getSuccess() && fourSquareResponseDTO.getSuccess()) {
+            List<PlaceDTO> placeDTOList = mergeResponseData((List<PlaceDTO>) googleResponseDTO.getData(), (List<PlaceDTO>) fourSquareResponseDTO.getData());
+            responseDTO.setData(placeDTOList);
+            responseDTO.setSuccess(true);
+            responseDTO.setHttpStatus(HttpStatus.OK);
+            responseDTO.setMessage(MessageConstants.SUCCESS);
+        } else if (googleResponseDTO.getSuccess()) {
+            responseDTO = googleResponseDTO;
+        } else {
+            responseDTO = fourSquareResponseDTO;
         }
         return new ResponseEntity<>(responseDTO, responseDTO.getHttpStatus());
+    }
+
+    private List<PlaceDTO> mergeResponseData(List<PlaceDTO> googleData, List<PlaceDTO> fourSquareData) {
+        List<PlaceDTO> mergedLocationList = Stream.concat(googleData.stream(), fourSquareData.stream()).distinct()
+                .collect(Collectors.toList());
+        log.debug("Returning merged list:{}", mergedLocationList.size());
+        return mergedLocationList;
     }
 
 }
