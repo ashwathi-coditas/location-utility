@@ -47,8 +47,8 @@ Returns a list of places for a given location with specified attributes like cat
 
 ## Location Provider Service
 Using FOURSQUARE place and Google geocode APIs for fetching location details.
-> Link for Foursquare API reference: https://developer.foursquare.com/places-api
-> Link for Google geocode API reference: https://developers.google.com/maps/documentation/geocoding/intro
+1. Link for Foursquare API reference: https://developer.foursquare.com/places-api
+2. Link for Google geocode API reference: https://developers.google.com/maps/documentation/geocoding/intro
 
 
 ## Implementation
