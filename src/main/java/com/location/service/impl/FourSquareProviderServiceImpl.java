@@ -134,7 +134,7 @@ public class FourSquareProviderServiceImpl implements GeoProviderService {
             placeDTOS.add(placeDTO);
         } catch (JSONException ex) {
             response = MessageConstants.PROPERTY_NOT_FOUND;
-            log.error("Error:" + ex.getMessage());
+            log.error("Error:", ex);
         }
         return response;
     }
