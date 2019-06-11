@@ -1,7 +1,6 @@
 package com.location.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 
 import java.util.HashMap;
 import java.util.Map;

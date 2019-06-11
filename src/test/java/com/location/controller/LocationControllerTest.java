@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public class LocationControllerTest {
 
-    private static final String GET_LOCATION_BY_NAME_URL = "/api/location/getLocationByName/{name}";
     private static final String GET_PLACES_URL = "/api/location/getPlaces";
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();

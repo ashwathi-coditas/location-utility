@@ -1,12 +1,11 @@
 package com.location.dto;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class LocationDTO {
-    String long_name;
-    String short_name;
-    List<String> types;
+    private String long_name;
+    private String short_name;
+    private List<String> types;
 
     public String getLong_name() {
         return long_name;

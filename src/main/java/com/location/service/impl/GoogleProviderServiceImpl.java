@@ -34,7 +34,7 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
 
     private static final Logger log = LoggerFactory.getLogger(GoogleProviderServiceImpl.class);
 
-    private enum statusCode {OK, ZERO_RESULTS, OVER_DAILY_LIMIT, INVALID_REQUEST, UNKNOWN_ERROR}
+    private enum StatusCode {OK, ZERO_RESULTS, OVER_DAILY_LIMIT, INVALID_REQUEST, UNKNOWN_ERROR}
 
     @Autowired
     private ApplicationProperties applicationProperties;
@@ -59,7 +59,7 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
         String response = "";
         if (null != data) {
             JSONObject jsonObj = new JSONObject(data);
-            JSONArray result = ((JSONArray) jsonObj.get("results"));
+            JSONArray result = (JSONArray) jsonObj.get("results");
             setResponse(responseDTO, jsonObj.getString("status"));
             for (int i = 0; i < result.length(); i++) {
                 JSONObject locationObj = result.getJSONObject(i);
@@ -94,11 +94,8 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
             try {
                 LocationDTO locationDTO = mapper.readValue(jsonArrayVenues.get(j).toString(), LocationDTO.class);
                 if (locationDTO.getTypes().contains("street_number") || locationDTO.getTypes().contains("route") || locationDTO.getTypes().contains("locality")) {
-                    if (placeDTO.getAddress() != null) {
-                        placeDTO.setAddress(placeDTO.getAddress().concat(",").concat(locationDTO.getLong_name()));
-                    } else {
-                        placeDTO.setAddress(locationDTO.getLong_name());
-                    }
+                    placeDTO.setAddress(placeDTO.getAddress() != null ? placeDTO.getAddress().concat(",").concat(locationDTO.getLong_name()) : locationDTO.getLong_name());
+
                 }
                 if (locationDTO.getTypes().contains("administrative_area_level_2")) {
                     placeDTO.setCity(locationDTO.getLong_name());
@@ -130,7 +127,7 @@ public class GoogleProviderServiceImpl implements GeoProviderService {
      * @param status
      */
     private void setResponse(ResponseDTO responseDTO, String status) {
-        switch (statusCode.valueOf(status)) {
+        switch (StatusCode.valueOf(status)) {
             case OK:
                 responseDTO.setHttpStatus(HttpStatus.OK);
                 responseDTO.setSuccess(true);
