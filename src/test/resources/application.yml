@@ -11,9 +11,9 @@ application:
   apiPath:
     fourSquare: "https://api.foursquare.com/v2/venues/search"
     google: "https://maps.googleapis.com/maps/api/geocode/json"
-  clientId: GYDX3XXR2MOWTOUH21G3JT4LIVU21RRASZGXZAHP3NYTJB14
-  clientSecret: SUOCQBTNJQSD5HMMYNMNHSTP2ET01SE2DKCLBPDS1FLNLVNF
-  googleKey: AIzaSyB-7aFOuCD1LHUXOYLI2PjxGu__2VX4Adg
+  clientId:
+  clientSecret:
+  googleKey:
 
 server:
   port: 8081
